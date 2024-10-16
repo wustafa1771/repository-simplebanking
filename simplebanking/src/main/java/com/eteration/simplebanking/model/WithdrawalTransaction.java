@@ -9,6 +9,14 @@ public class WithdrawalTransaction extends Transaction{
 
 		super.setAmount(amount);
 		super.setDate(LocalDate.now());
+
+		this.setType("Withdrawal transaction");
+	}
+
+	@Override
+	public void processTransaction(Account acc) throws InsufficientBalanceException {
+		acc.withdraw(this.getAmount());
+		
 	}
 }
 

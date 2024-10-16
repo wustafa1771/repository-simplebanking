@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eteration.simplebanking.model.AccountRequest;
 import com.eteration.simplebanking.model.DebitRequest;
 import com.eteration.simplebanking.model.DepositTransaction;
 import com.eteration.simplebanking.model.Transaction;
@@ -29,7 +30,7 @@ AccountService accService;
     	if(response) {
             return new ResponseEntity<>("Money succesfully deposited", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Account not found", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("/account/v1/debit/{accountNumber}")
@@ -40,8 +41,14 @@ AccountService accService;
     	if(response) {
             return new ResponseEntity<>("MoneySuccessfully withdrawn", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Account not found", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PostMapping("/account/v1/createAccount")
+    public ResponseEntity<?> createAccount(@RequestBody AccountRequest acc) {
+
+    	boolean response = accService.createAccount(acc);
+        return new ResponseEntity<>("Account succesfully created", HttpStatus.OK);
     }
 
     @GetMapping("/account/v1/{accountNumber}")

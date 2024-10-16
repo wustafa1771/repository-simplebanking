@@ -8,12 +8,19 @@ public class DepositTransaction  extends Transaction{
 		super.setAmount(amount);
 		super.setDate(LocalDate.now());
 
+		this.setType("DepositTransaction");
+
 	}
 	public double getAmount() {
 		return super.getAmount();
 	}
 	public void setAmount(double amount) {
 		super.setAmount(amount);
+	}
+	@Override
+	public void processTransaction(Account acc) {
+		acc.deposit(this.getAmount());
+		
 	}
 	
 	

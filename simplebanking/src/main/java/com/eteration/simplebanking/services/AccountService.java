@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import com.eteration.simplebanking.model.Account;
+import com.eteration.simplebanking.model.AccountRequest;
 import com.eteration.simplebanking.model.Transaction;
 
 @Service
@@ -34,8 +35,8 @@ public class AccountService {
 			   break;
 		   }
 		if(accSearch!=null) {
-			accSearch.post(TRX);
-			return true;
+			return accSearch.post(TRX);
+			 
 		}else {
 			return false;
 		}
@@ -58,7 +59,7 @@ public class AccountService {
 		}
 	}
 
-	public void findAccount(String accNum) {
+	public Account findAccount(String accNum) {
 		Account accSearch = null;
 
 		for (Account index : accounts ) {
@@ -66,8 +67,15 @@ public class AccountService {
 			   {
 				   accSearch = index;
 				   currentAccount = index;
+				   break;
 			   }
-			   break;
-		   }		
+		   }
+		return currentAccount;
+	}
+	public boolean createAccount(AccountRequest accReq) {
+		Account acc = new Account(accReq.getOwner(), accReq.getAccountNumber());
+		accounts.add(acc);
+		return true;
+		
 	}
 }

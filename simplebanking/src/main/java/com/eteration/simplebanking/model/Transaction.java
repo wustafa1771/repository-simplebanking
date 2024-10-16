@@ -30,5 +30,6 @@ public abstract class Transaction {
 	public String toString() {
 		return "Transaction [date=" + date + ", amount=" + amount + ", type=" + type + "]";
 	}
+	public abstract  void processTransaction(Account acc) throws InsufficientBalanceException;
 	
 }

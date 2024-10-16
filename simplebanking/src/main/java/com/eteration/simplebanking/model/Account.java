@@ -17,8 +17,10 @@ public class Account {
 		this.transactions = new ArrayList<Transaction>();
 	}
 	
-	public void post(Transaction trx) {
+	public boolean post(Transaction trx) {
 		try {
+			trx.processTransaction(this);
+			/*
 			if(trx instanceof DepositTransaction) {
 				trx.setType("DepositTransaction");
 				this.deposit(trx.getAmount());
@@ -27,9 +29,11 @@ public class Account {
 				trx.setType("WithdrawalTransaction");
 
 				this.withdraw(trx.getAmount());
-			}
+			}*/
 			transactions.add(trx);
-		} catch (Exception e) {
+			return true;
+		} catch (InsufficientBalanceException e) {
+			return false;
 		}
 		
 	}
